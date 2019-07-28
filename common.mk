@@ -237,9 +237,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     OnePlusDoze
 
-# DisplayMode
+# AOSiP Device Settings
 PRODUCT_PACKAGES += \
-    DisplayMode
+    DeviceSettings
 
 # DRM
 PRODUCT_PACKAGES += \
@@ -449,7 +449,6 @@ PRODUCT_PACKAGES += \
 
 # Tri-state keys
 PRODUCT_PACKAGES += \
-    KeyHandler \
     tri-state-key_daemon
 
 # Update engine
