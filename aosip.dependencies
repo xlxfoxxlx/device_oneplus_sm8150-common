@@ -1,20 +1,21 @@
 [
  {
-   "repository":  "kernel_oneplus_sm8150",
-   "target_path": "kernel/oneplus/sm8150"
+   "repository" : "kernel_oneplus_sm8150",
+   "target_path": "kernel/oneplus/sm8150",
+   "branch"     : "IK"
  },
  {
-   "repository":  "PeterCxy/proprietary_vendor_oneplus-1",
+   "repository" : "PeterCxy/proprietary_vendor_oneplus-1",
    "target_path": "vendor/oneplus",
-   "branch":      "lineage-17.0"
+   "branch"     : "lineage-17.0"
  },
  {
-   "repository": "device_oneplus_common",
+   "repository" : "device_oneplus_common",
    "target_path": "device/oneplus/common"
  },
  {
-   "repository":  "LineageOS/android_packages_resources_devicesettings",
+   "repository" : "LineageOS/android_packages_resources_devicesettings",
    "target_path": "packages/resources/devicesettings",
-   "branch":      "lineage-17.0"
+   "branch"     : "lineage-17.0"
  }
 ]
