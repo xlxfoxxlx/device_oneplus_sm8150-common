@@ -17,27 +17,15 @@
 */
 package com.aosip.device.DeviceSettings;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.res.Resources;
-import android.content.Intent;
 import android.os.Bundle;
-import androidx.preference.PreferenceFragment;
-import androidx.preference.SwitchPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceCategory;
-import androidx.preference.PreferenceGroup;
-import androidx.preference.PreferenceScreen;
+import androidx.preference.PreferenceFragment;
+import androidx.preference.PreferenceManager;
+import androidx.preference.SwitchPreference;
 import androidx.preference.TwoStatePreference;
 import android.provider.Settings;
-import android.text.TextUtils;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-import android.util.Log;
 
 import com.android.internal.util.aosip.FileUtils;
 import com.aosip.device.DeviceSettings.Constants;
@@ -51,13 +39,18 @@ public class DeviceSettings extends PreferenceFragment
     public static final String KEY_DCI_SWITCH = "dci";
     public static final String KEY_NIGHT_SWITCH = "night";
     public static final String KEY_WIDECOLOR_SWITCH = "widecolor";
-
+    public static final String KEY_REFRESH_RATE = "refresh_rate";
+    public static final String KEY_AUTO_REFRESH_RATE = "auto_refresh_rate";
     public static final String KEY_SETTINGS_PREFIX = "device_setting_";
 
+    private static final String KEY_CATEGORY_REFRESH = "refresh";
+
     private static TwoStatePreference mHBMModeSwitch;
+    private static TwoStatePreference mRefreshRate;
     private ListPreference mTopKeyPref;
     private ListPreference mMiddleKeyPref;
     private ListPreference mBottomKeyPref;
+    private static SwitchPreference mAutoRefreshRate;
     private VibratorStrengthPreference mVibratorStrength;
 
     @Override
@@ -84,12 +77,29 @@ public class DeviceSettings extends PreferenceFragment
         mHBMModeSwitch.setEnabled(HBMModeSwitch.isSupported());
         mHBMModeSwitch.setChecked(HBMModeSwitch.isCurrentlyEnabled(this.getContext()));
         mHBMModeSwitch.setOnPreferenceChangeListener(new HBMModeSwitch());
+
+        mAutoRefreshRate = (SwitchPreference) findPreference(KEY_AUTO_REFRESH_RATE);
+        mAutoRefreshRate.setChecked(AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
+        mAutoRefreshRate.setOnPreferenceChangeListener(new AutoRefreshRateSwitch(getContext()));
+
+        mRefreshRate = (TwoStatePreference) findPreference(KEY_REFRESH_RATE);
+        mRefreshRate.setEnabled(!AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
+        mRefreshRate.setChecked(RefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
+        mRefreshRate.setOnPreferenceChangeListener(new RefreshRateSwitch(getContext()));
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         Constants.setPreferenceInt(getContext(), preference.getKey(), Integer.parseInt((String) newValue));
         return true;
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(Preference preference) {
+        if (preference == mAutoRefreshRate) {
+              mRefreshRate.setEnabled(!AutoRefreshRateSwitch.isCurrentlyEnabled(this.getContext()));
+        }
+        return super.onPreferenceTreeClick(preference);
     }
 
     @Override

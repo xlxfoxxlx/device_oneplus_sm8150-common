@@ -59,6 +59,8 @@ public class Startup extends BroadcastReceiver {
         restore(NightModeSwitch.getFile(), enabled);
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_WIDECOLOR_SWITCH, false);
         restore(WideColorModeSwitch.getFile(), enabled);
+        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_REFRESH_RATE, false);
+        Settings.System.putInt(context.getContentResolver(), Settings.System.PEAK_REFRESH_RATE, enabled ? 90 : 60);
         VibratorStrengthPreference.restore(context);
     }
 }
