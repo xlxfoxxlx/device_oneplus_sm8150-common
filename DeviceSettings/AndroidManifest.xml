@@ -13,6 +13,7 @@
      limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           android:sharedUserId="android.uid.system"
           package="com.aosip.device.DeviceSettings"
           android:versionCode="1"
@@ -24,12 +25,16 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <uses-sdk
-        android:minSdkVersion="24" />
+        android:minSdkVersion="26"
+        android:targetSdkVersion="26" />
 
     <application
         android:icon="@drawable/ic_settings_device"
         android:label="@string/device_title"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        tools:replace="android:appComponentFactory"
+        android:supportsRtl="true" >
 
         <!-- Device Settings -->
         <activity
